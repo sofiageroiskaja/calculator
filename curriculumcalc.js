@@ -21,7 +21,6 @@ class CurriculumCalculator{
     }
 
     init(){
-        console.log(this.lang);
         if(this.inputValidation() == 1){
             $("#error").html("");
             $("#result_error").html("");
@@ -211,13 +210,33 @@ $("#back_button").on("click", function(){
 
 $("#calculate_button").click(function(){
     let calculation = new CurriculumCalculator(lang);
+    if(lang == 1){
+        $("#curriculum_result").html("Your curriculum: " + $("#curriculum_dropdown :selected").text());
+        $("#ects_result").html("Your number of ECTS: " + $("#ects_count").val() + " ECTS");
+        if($("#ects_count").val() < ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
+            $("#study_load").html("Study load: Part time");
+        } else {
+            $("#study_load").html("Study load: Full time");
+        }
+        $("#study_lower_limit_result").html("The lower limit for continuing learning: " + ((($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 30) * 0.5) + " ECTS");
+        $("#full_study_load_limit_result").html("Minimum required for full-time studies: " + (($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5) + " ECTS");
+        
+        if($("#ects_count").val() >= ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
+            $("#scenario").html("You will continue to study full-time.");
+        }
+        if($("#ects_count").val() <= ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
+            $("#scenario").html("You fall to part-time studies.");
+        }
+        if(($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) % 2 == 0 && $("#ects_count").val() < ((($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 30) * 0.5)){
+            $("#scenario").html("<b>You are at risk of expulsion because the number of ECTS is lower than the minimum number of continuing studies</b>");
+        }
+    
+    }
 })
 
 $("#result_calculate_button").click(function(){
     let calculation = new CurriculumCalculator(lang);
 })
-
-
 
 function CalculatorToEng() {
     if(lang == 0){
@@ -261,27 +280,6 @@ function CalculatorToEng() {
     document.getElementById('fourth_help_txt').innerHTML = "Completion of the in-depth study module is obligatory only for students of Estonian-language curricula whose Estonian language level does not meet the C1 requirement established at the university and who are assigned by TU, on the basis of a placement test, to complete the in-depth study module.";
     document.getElementById('fourth_help_txt').style.marginTop = "10px";
     document.getElementById('result_heading').innerHTML = "Result";
-    
-    $("#curriculum_result").html("Your curriculum: " + $("#curriculum_dropdown :selected").text());
-    $("#ects_result").html("Your number of ECTS: " + $("#ects_count").val() + " ECTS");
-    if($("#ects_count").val() < ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
-        $("#study_load").html("Study load: Part time");
-    } else {
-        $("#study_load").html("Study load: Full time");
-    }
-    $("#study_lower_limit_result").html("The lower limit for continuing learning: " + ((($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 30) * 0.5) + " ECTS");
-    $("#full_study_load_limit_result").html("Minimum required for full-time studies: " + (($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5) + " ECTS");
-    
-    if($("#ects_count").val() >= ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
-        $("#scenario").html("You will continue to study full-time.");
-    }
-    if($("#ects_count").val() <= ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
-        $("#scenario").html("You fall to part-time studies.");
-    }
-    if(($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) % 2 == 0 && $("#ects_count").val() < ((($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 30) * 0.5)){
-        $("#scenario").html("<b>You are at risk of expulsion because the number of ECTS is lower than the minimum number of continuing studies</b>");
-    }
-
     document.getElementById('new_calculation_button').innerHTML = "New calculation";
     document.getElementById('result_calculate_button').innerHTML = "Calculate";
     document.getElementById('result_calculate_button').style.marginLeft = "416px";
