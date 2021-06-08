@@ -1,5 +1,5 @@
 class CurriculumCalculator{
-    constructor(){
+    constructor(language){
         this.bachelorsCurriculums = ["Informaatika", "Infoteadus", "Matemaatika, majandusmatemaatika ja andmeanalüüs"];
         this.mastersCurriculums = ["Haridustehnoloogia", "Infotehnoloogia juhtimine", "Infoteadus", "Informaatikaõpetaja", "Matemaatikaõpetaja", "Avatud ühiskonna tehnoloogiad", "Digitaalsed õpimängud", "Inimese ja arvuti interaktsioon", "Interaktsioonidisain"];
         this.attendanceCount = $("#curriculum_attendance").val();
@@ -16,10 +16,12 @@ class CurriculumCalculator{
         this.studyLoad = "";
         this.curriculumChoice = $("#curriculum_dropdown :selected").text();
         this.degree = "none";
+        this.lang = language;
         this.init();
     }
 
     init(){
+        console.log(this.lang);
         if(this.inputValidation() == 1){
             $("#error").html("");
             $("#result_error").html("");
@@ -122,13 +124,6 @@ class CurriculumCalculator{
     }
 
     drawResultBox(){
-        if($("#error").html("") && document.getElementById('en').clicked == true){
-            $("#curriculum_result").html("Your curriculum: " + this.curriculumChoice);
-            $("#ects_result").html("Your number of ECTS: " + this.ectsCount + " ECTS");
-            $("#result_padding").css("display", "block");
-            $("#results").css("display", "block");
-            this.calcScenario();
-        }
         if($("#error").html("")){
             $("#curriculum_result").html("Sinu õppekava: " + this.curriculumChoice);
             $("#ects_result").html("Sinu ainepunktide arv: " + this.ectsCount + " EAP");
@@ -163,6 +158,8 @@ class CurriculumCalculator{
         }
     }
 }
+
+let lang = 0;
 
 $("#abroad_yes").on("click", function(){
     $("#abroad_input_area").css("display", "block");
@@ -213,14 +210,21 @@ $("#back_button").on("click", function(){
 })
 
 $("#calculate_button").click(function(){
-    let calculation = new CurriculumCalculator;
+    let calculation = new CurriculumCalculator(lang);
 })
 
 $("#result_calculate_button").click(function(){
-    let calculation = new CurriculumCalculator;
+    let calculation = new CurriculumCalculator(lang);
 })
 
+
+
 function CalculatorToEng() {
+    if(lang == 0){
+        lang = 1;
+    } else {
+        lang = 0;
+    }
     document.getElementById('heading').innerHTML = "Curriculum scenario calculator";
     document.getElementById('info_text').innerHTML = "Study data can be found in Õis under study results";
     document.getElementById('curriculum_dropdown_label').innerHTML = "Curriculum";
