@@ -180,6 +180,8 @@ function CalculatorToEng() {
     document.getElementById('result_calculate_button').innerHTML = "Calculate";
     document.getElementById('pdf_save_button').innerHTML = "Save as PDF";
 
+    ResultToEng();
+
     var x = document.getElementsByClassName("yes_label");
     var i;
     for (i = 0; i < x.length; i++) {
