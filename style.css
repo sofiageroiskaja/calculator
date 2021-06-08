@@ -16,7 +16,7 @@ button{
     margin-bottom: 10px;
 }
 
-#lang_link{
+.lang_link{
     color: rgb(160,206,200);
     text-decoration: underline;
     cursor: pointer;
