@@ -242,5 +242,6 @@ function CalculatorToEng() {
     for (j = 0; j < y.length; j++) {
         y[j].innerHTML = "No";
     }
+    
     ResultToEng(); 
 }

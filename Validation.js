@@ -65,7 +65,6 @@ class Validation extends CurriculumCalculator {
         } else {
             return 1;
         }
-        
     }
 
     errorMessages(k1, k2, k3, k4, k5, k6){
