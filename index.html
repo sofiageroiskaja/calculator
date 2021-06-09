@@ -13,20 +13,20 @@
     <script src="Main.js" defer></script>
     <script src="Validation.js" defer></script>
     <script src="Calculation.js" defer></script>
-    <title>Sisestuslahtrid</title>
+    <script src="Graphic.js" defer></script>
+    <title>Õppekava täitmise kalkulaator</title>
 </head>
 <body>
     <div id="whole_page_area">
-        <div id="header">
-            <span id="heading">Õppekava täitmise kalkulaator</span>
-            <a href="index.html" class="lang_link">Eesti keeles </a>
-            <a onclick="CalculatorToEng();" class="lang_link" id="en">| In English</a>
-        </div>
+        <p id="heading">Õppekava täitmise kalkulaator</p>
+        <a href="https://www.tlu.ee/" id="mainpage">Tagasi pealehele</a>
+        <a href="index.html" class="lang_link">Eesti keeles </a>
+        <a onclick="CalculatorToEng();" class="lang_link" id="en">| In English</a>
         <p id="info_text">Õppeandmed leiab õppeinfosüsteemist õppetulemuste alt (ÕISist)</p>
         <div id="curriculum_choice_area">
             <label for="curriculum_dropdown" id="curriculum_dropdown_label">Vali õppekava: </label>
             <select name="curriculum_dropdown" id="curriculum_dropdown">
-                <option value="select_curriculum" id="select_curriculum" disabled selected>Vali õppekava...</option>
+                <option value="select_curriculum"id="select_curriculum" disabled selected>Vali õppekava...</option>
                 <option value="computer_science" id="computer_science">Informaatika</option>
                 <option value="info_science" id="info_science">Infoteadus</option>
                 <option value="mathematics" id="mathematics">Matemaatika, majandusmatemaatika ja andmeanalüüs</option>
@@ -136,6 +136,7 @@
             <div id="result_padding">
                 <p id="result_heading">Tulemus</p>
                 <div id="results">
+                    <canvas id="canvas" width="538" height="126"></canvas>
                     <div id="curriculum_result">Sinu õppekava: </div>
                     <div id="study_load">Õppekoormus: </div>
                     <div id="ects_result">Sinu ainepunktide arv: </div>
@@ -152,5 +153,9 @@
         <button id="pdf_save_button">Salvesta PDFina</button>
     </div>
     <div id="result_error"></div>
+    <footer id="footer">
+        <span id="infosystem">Õppeinfosüsteem:</span>
+        <a href="https://ois.tlu.ee/pls/portal/ois2.ois_public.main" target="_blank" id="help_link">https://ois.tlu.ee/pls/portal/ois2.ois_public.main</a>
+    </footer>
 </body>
 </html>

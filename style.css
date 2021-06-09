@@ -1,31 +1,42 @@
-body{
+html, body{
+    height: 100%;
     display: block;
     font-family: 'Helvetica', sans-serif;
+}
+
+#whole_page_area{
+    min-height: 94%;
 }
 
 button{
     cursor: pointer;
 }
 
-span{
-    font-size: 24px;
-    margin-right: 105px;
+canvas {
+	background-color: white;
+	margin: 0px;
 }
 
-.lang_link{
+#heading{
+    font-size: 24px;
+    margin-right: 105px;
+    margin-bottom: 12px;
+}
+
+a{
     color: rgb(160,206,200);
     text-decoration: underline;
     cursor: pointer;
 }
 
-#header{
-    display: inline;
+#mainpage{
+    margin-right: 301px;
 }
 
 #info_text {
     background-color: #6BCABA;
     padding: 5px;
-    width: 590px;
+    width: 586px;
     color: white;
     margin-bottom: 10px;
 }
@@ -35,7 +46,7 @@ span{
 }
 
 #input_area_buttons, #result_area_buttons {
-    max-width: 600px;
+    max-width: 596px;
     max-height: 30px;
 }
 
@@ -44,7 +55,7 @@ span{
     padding: 10px;
     border-style: solid;
     border-color: #6BCABA;
-    width: 574px;
+    width: 570px;
 }
 
 #abroad_input_area {
@@ -55,16 +66,17 @@ span{
     margin-bottom: 10px;
     margin-top: 10px;
     padding: 10px;
-    width: 574px;
+    width: 570px;
     display: none;
     border-style: solid;
     border-color: #6BCABA;
 }
 
 #error, #result_error {
-    margin-top: 10px;
     color: red;
     font-weight: bold;
+    max-width: 596px;
+    white-space: pre-wrap;
 }
 
 #result_error {
@@ -123,7 +135,7 @@ input[type=number] {
     padding: 10px;
     border-style: solid;
     border-color: #6BCABA;
-    width: 547px;
+    width: 543px;
 }
 
 #back_button:hover, #new_calculation_button:hover{
