@@ -20,16 +20,17 @@
     <div id="whole_page_area">
         <p id="heading">Õppekava täitmise kalkulaator</p>
         <a href="https://www.tlu.ee/" id="mainpage">Tagasi pealehele</a>
-        <a href="index.html" class="lang_link">Eesti keeles </a>
-        <a onclick="CalculatorToEng();" class="lang_link" id="en">| In English</a>
+        <a onclick="CalculatorToEst();" class="lang_link" id="ee">Eesti keeles </a>
+        <a class="lang_link" id="link_line">|</a>
+        <a onclick="CalculatorToEng();" class="lang_link" id="en"> In English</a>
         <p id="info_text">Õppeandmed leiab õppeinfosüsteemist õppetulemuste alt (ÕISist)</p>
         <div id="curriculum_choice_area">
             <label for="curriculum_dropdown" id="curriculum_dropdown_label">Vali õppekava: </label>
             <select name="curriculum_dropdown" id="curriculum_dropdown">
                 <option value="select_curriculum"id="select_curriculum" disabled selected>Vali õppekava...</option>
                 <option value="computer_science" id="computer_science">Informaatika</option>
-                <option value="info_science" id="info_science">Infoteadus</option>
-                <option value="mathematics" id="mathematics">Matemaatika, majandusmatemaatika ja andmeanalüüs</option>
+                <option value="info_science" id="info_science_bd">Infoteadus (BA)</option>
+                <option value="info_science" id="info_science_md">Infoteadus (MA)</option>                <option value="mathematics" id="mathematics">Matemaatika, majandusmatemaatika ja andmeanalüüs</option>
                 <option value="education_technology" id="education_technology">Haridustehnoloogia</option>
                 <option value="computer_science_business" id="computer_science_business">Infotehnoloogia juhtimine</option>
                 <option value="computer_science_teacher" id="computer_science_teacher">Informaatikaõpetaja</option>
@@ -48,13 +49,13 @@
             </div>
         </div>
         <div id="curriculum_choice_area_buttons">
-            <button id="continue_button">Edasi</button>
+            <button id="continue_button" class="green_btn">Edasi</button>
         </div>
             <div id="input_area">
                 <label for="curriculum_attendance" id="curriculum_attendance_label">TLÜs viibitud semestrite arv</label>
                 <div class="help_button">
                     <i class="fa fa-question-circle" id="first_help"></i>
-                    <span class="help_txt" id="first_help_txt" style="width: 280px;">Sisaldab kõiki Tallinna Ülikoolis viibitud semestreid (k.a akadeemilisel puhkusel, välisõppes jne)</span>
+                    <span class="help_txt" id="first_help_txt" style="width: 270px;">Sisaldab kõiki Tallinna Ülikoolis viibitud semestreid (k.a akadeemilisel puhkusel, välisõppes jne)</span>
                 </div>
                 <input type="number" id="curriculum_attendance" value="7" min="0" oninput="validity.valid||(value='');">
                 <br>
@@ -62,7 +63,7 @@
                 <label for="sabbatical_leave" id="sabbatical_leave_label">Akadeemilisel puhkusel viibitud semestrite arv</label>
                 <div class="help_button">
                     <i class="fa fa-question-circle" id="second_help"></i>
-                    <span class="help_txt" id="second_help_txt" style="width: 150px;">Õppeinfosüsteemi lahter "sh akadeemiliselt"</span>
+                    <span class="help_txt" id="second_help_txt" style="width: 132px;">Õppeinfosüsteemi lahter "sh akadeemiliselt"</span>
                 </div>
                 <input type="number" id="sabbatical_leave" value="2" min="0" oninput="validity.valid||(value='');">
                 <br>
@@ -70,7 +71,7 @@
                 <label for="ects_count" id="ects_count_label">Õppekava täitmisel arvesse minevad EAP-d</label>
                 <div class="help_button">
                     <i class="fa fa-question-circle" id="third_help"></i>
-                    <span class="help_txt" id="third_help_txt" style="width: 170px;">Õppeinfosüsteemi lahter "Koormusarvutusel arvesse minevad EAP-d sügissemestri ja õppeaasta lõpu seisuga"</span>
+                    <span class="help_txt" id="third_help_txt" style="width: 147px;">Õppeinfosüsteemi lahter "Koormusarvutusel arvesse minevad EAP-d sügissemestri ja õppeaasta lõpu seisuga"</span>
                 </div>
                 <input type="number" id="ects_count" value="98" min="0" oninput="validity.valid||(value='');">
                 <br>
@@ -78,7 +79,7 @@
                 <label for="studied_abroad" id="studied_abroad_label">Kas oled viibinud välisõppes või välispraktikal?</label>
                 <div id="studied_abroad">
                     <br>
-                    <input type="radio" id="abroad_yes" name="studied_abroad" value="yes">
+                    <input type="radio" id="abroad_yes" name="studied_abroad" value="yes" class="yes">
                     <label for="abroad_yes" class="yes_label">Jah</label>
                     <input type="radio" id="abroad_no" name="studied_abroad" value="no" checked>
                     <label for="abroad_no" class="no_label">Ei</label>
@@ -89,7 +90,7 @@
                         <br>
                         <br>
                         <div id="currently_studying_abroad">
-                            <input type="radio" id="currently_abroad_yes" name="currently_studying_abroad" value="yes">
+                            <input type="radio" id="currently_abroad_yes" name="currently_studying_abroad" value="yes" class="yes">
                             <label for="currently_abroad_yes" class="yes_label">Jah</label>
                             <input type="radio" id="currently_abroad_no" name="currently_studying_abroad" value="no" checked>
                             <label for="currently_abroad_no" class="no_label">Ei</label> 
@@ -108,11 +109,11 @@
                 <label for="studied_estonian" id="studied_estonian_label">Kas sulle on määratud ja oled edukalt täitnud riigikeele süvaõppe kõrvaleriala?</label>
                 <div class="help_button">
                     <i class="fa fa-question-circle" id="fourth_help"></i>
-                    <span class="help_txt" id="fourth_help_txt" style="width: 200px;">Süvaõppe mooduli täitmine on kohustuslik vaid eestikeelsete õppekavade üliõpilastele, kelle eesti keele tase ei vasta ülikoolis kehtestatud C1-nõudele ja kes on TLÜ poolt, paigutustesti alusel, määratud süvaõppe moodulit täitma.</span>
+                    <span class="help_txt" id="fourth_help_txt" style="width: 192px;">Süvaõppe mooduli täitmine on kohustuslik vaid eestikeelsete õppekavade üliõpilastele, kelle eesti keele tase ei vasta ülikoolis kehtestatud C1-nõudele ja kes on TLÜ poolt, paigutustesti alusel, määratud süvaõppe moodulit täitma.</span>
                 </div>
                 <div id="studied_estonian">
                     <br>
-                    <input type="radio" id="estonian_yes" name="studied_estonian" value="yes">
+                    <input type="radio" id="estonian_yes" name="studied_estonian" value="yes" class="yes">
                     <label for="estonian_yes" class="yes_label">Jah</label>
                     <input type="radio" id="estonian_no" name="studied_estonian" value="no" checked>
                     <label for="estonian_no" class="no_label">Ei</label>
@@ -121,7 +122,7 @@
                 <label for="current_sabbatical_leave" id="current_sabbatical_leave_label">Kas viibid hetkel akadeemilisel puhkusel?</label>
                 <div id="current_sabbatical_leave">
                     <br>
-                    <input type="radio" id="current_sabbatical_leave_yes" name="current_sabbatical_leave" value="yes">
+                    <input type="radio" id="current_sabbatical_leave_yes" name="current_sabbatical_leave" value="yes" class="yes">
                     <label for="current_sabbatical_leave_yes" class="yes_label">Jah</label>
                     <input type="radio" id="current_sabbatical_leave_no" name="current_sabbatical_leave" value="no" checked>
                     <label for="current_sabbatical_leave_no" class="no_label">Ei</label>
@@ -129,8 +130,8 @@
                 <br>
             </div>
             <div id="input_area_buttons">
-                <button id="back_button">Tagasi</button>
-                <button id="calculate_button">Kalkuleeri</button>
+                <button id="back_button" class="white_btn">Tagasi</button>
+                <button id="calculate_button" class="green_btn">Kalkuleeri</button>
             </div>
             <div id="error"></div>
             <div id="result_padding">
@@ -148,9 +149,9 @@
             </div>
     </div>
     <div id="result_area_buttons">
-        <button id="new_calculation_button">Alusta uuesti</button>
-        <button id="result_calculate_button">Kalkuleeri</button>
-        <button id="pdf_save_button">Salvesta PDFina</button>
+        <button id="new_calculation_button" class="white_btn">Alusta uuesti</button>
+        <button id="result_calculate_button" class="green_btn">Kalkuleeri</button>
+        <button id="pdf_save_button" class="green_btn">Salvesta PDFina</button>
     </div>
     <div id="result_error"></div>
     <footer id="footer">

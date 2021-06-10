@@ -162,28 +162,6 @@ $("#result_calculate_button").click(function(){
     }
 })
 
-function ResultToEng(){
-    $("#curriculum_result").html("Your curriculum: " + $("#curriculum_dropdown :selected").text());
-    $("#ects_result").html("Your number of ECTS: " + $("#ects_count").val() + " ECTS");
-    if($("#ects_count").val() < ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
-        $("#study_load").html("Study load: Part time");
-    } else {
-        $("#study_load").html("Study load: Full time");
-    }
-    $("#study_lower_limit_result").html("The lower limit for continuing learning: " + ((($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 30) * 0.5) + " ECTS");
-    $("#full_study_load_limit_result").html("Minimum required for full-time studies: " + (($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5) + " ECTS");
-    
-    if($("#ects_count").val() >= ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
-        $("#scenario").html("You will continue to study full-time.");
-    }
-    if($("#ects_count").val() <= ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
-        $("#scenario").html("You fall to part-time studies.");
-    }
-    if(($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) % 2 == 0 && $("#ects_count").val() < ((($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 30) * 0.5)){
-        $("#scenario").html("<b>You are at risk of expulsion because the number of ECTS is lower than the minimum number of continuing studies</b>");
-    }
-}
-
 function CalculatorToEng() {
     if(lang == 0){
         lang = 1;
@@ -192,10 +170,13 @@ function CalculatorToEng() {
     }
     document.getElementById('heading').innerHTML = "Curriculum scenario calculator";
     document.getElementById('info_text').innerHTML = "Study data can be found in the study information system under study results (ÕIS)";
+    document.getElementById('mainpage').innerHTML = "Back to mainpage";
+    document.getElementById('mainpage').style.marginRight = "333px";
     document.getElementById('curriculum_dropdown_label').innerHTML = "Choose a curriculum";
     document.getElementById('select_curriculum').innerHTML = "Choose a curriculum...";
     document.getElementById('computer_science').innerHTML = "informatics";
-    document.getElementById('info_science').innerHTML = "Information science";
+    document.getElementById('info_science_bd').innerHTML = "Information science (BA)";
+    document.getElementById('info_science_md').innerHTML = "Information science (MA)";
     document.getElementById('mathematics').innerHTML = "Mathematics, economic mathematics and data analysis";
     document.getElementById('education_technology').innerHTML = "Educational technology";
     document.getElementById('computer_science_business').innerHTML = "Information technology management";
@@ -207,6 +188,7 @@ function CalculatorToEng() {
     document.getElementById('interaction_design').innerHTML = "Interaction design";
     document.getElementById('free_label').innerHTML = "Free";
     document.getElementById('paid_label').innerHTML = "Paid";
+    document.getElementById('free_label').style.marginRight = "168px";
     document.getElementById('continue_button').innerHTML = "Next";
     document.getElementById('curriculum_attendance_label').innerHTML = "Number of semesters spent at TU";
     document.getElementById('sabbatical_leave_label').innerHTML = "Number of semesters on academic leave";
@@ -242,6 +224,169 @@ function CalculatorToEng() {
     for (j = 0; j < y.length; j++) {
         y[j].innerHTML = "No";
     }
-    
+    ErrorToEng();
     ResultToEng(); 
+}
+
+
+function ResultToEng(){
+    $("#curriculum_result").html("Your curriculum: " + $("#curriculum_dropdown :selected").text());
+    $("#ects_result").html("Your number of ECTS: " + $("#ects_count").val() + " ECTS");
+    if($("#ects_count").val() < ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
+        $("#study_load").html("Study load: Part time");
+    } else {
+        $("#study_load").html("Study load: Full time");
+    }
+    $("#study_lower_limit_result").html("The lower limit for continuing learning: " + ((($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 30) * 0.5) + " ECTS");
+    $("#full_study_load_limit_result").html("Minimum required for full-time studies: " + (($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5) + " ECTS");
+    
+    if($("#ects_count").val() >= ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
+        $("#scenario").html("You will continue to study full-time.");
+    }
+    if($("#ects_count").val() <= ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
+        $("#scenario").html("You fall to part-time studies.");
+    }
+    if(($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) % 2 == 0 && $("#ects_count").val() < ((($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 30) * 0.5)){
+        $("#scenario").html("<b>You are at risk of expulsion because the number of ECTS is lower than the minimum number of continuing studies</b>");
+    }
+}
+
+function ErrorToEng(){
+    var err1 = document.getElementById("error").innerHTML.replace("\nTLÜs viibitud semestrite arv ei tohi olla 0!\n", "\nThe number of semesters spent at TU must not be 0!\n");
+    document.getElementById("error").innerHTML = err1;
+    document.getElementById("result_error").innerHTML = err1;
+
+    var err2 = document.getElementById("error").innerHTML.replace("\nAkadeemilisel puhkusel viibitud semestrite arv ei tohi olla üle TLÜs viibitud semestrite arvust!\n", "\nThe number of semesters spent on academic leave must not exceed the number of semesters spent at TU!\n");
+    document.getElementById("error").innerHTML = err2;
+    document.getElementById("result_error").innerHTML = err2;
+
+    var err3 = document.getElementById("error").innerHTML.replace("\nÕppekava täitmisel arvesse minevate EAP-de arv ei tohi olla 0!\n", "\nThe number of credits to be taken into account for the completion of the curriculum must not be 0!\n");
+    document.getElementById("error").innerHTML = err3;
+    document.getElementById("result_error").innerHTML = err3;
+
+    var err4 = document.getElementById("error").innerHTML.replace("\nVälisõppes viibitud semestrite arv ei tohi olla 0!\n", "\nThe number of semesters spent studying abroad must not be 0!\n");
+    document.getElementById("error").innerHTML = err4;
+    document.getElementById("result_error").innerHTML = err4;
+
+    var err5 = document.getElementById("error").innerHTML.replace("\nVälisõppes viibitud ainepunktide arv ei tohi olla 0!\n", "\nThe number of credits spent abroad must not be 0!\n");
+    document.getElementById("error").innerHTML = err5;
+    document.getElementById("result_error").innerHTML = err5;
+
+    var err6 = document.getElementById("error").innerHTML.replace("\nAkadeemilisel puhkusel ning välisõppel ei saa korraga samal ajal viibida!\n", "\nAcademic leave and study abroad cannot be taken at the same time!\n");
+    document.getElementById("error").innerHTML = err6;
+    document.getElementById("result_error").innerHTML = err6;
+}
+
+function CalculatorToEst() {
+    if(lang == 1){
+        lang = 0;
+    } else {
+        lang = 1;
+    }
+    document.getElementById('heading').innerHTML = "Õppekava täitmise kalkulaator";
+    document.getElementById('info_text').innerHTML = "Õppeandmed leiab õppeinfosüsteemist õppetulemuste alt (ÕISist)";
+    document.getElementById('mainpage').innerHTML = "Tagasi pealehele";
+    document.getElementById('mainpage').style.marginRight = "340px";
+    document.getElementById('curriculum_dropdown_label').innerHTML = "Vali õppekava: ";
+    document.getElementById('select_curriculum').innerHTML = "Vali õppekava...";
+    document.getElementById('computer_science').innerHTML = "Informaatika";
+    document.getElementById('info_science_bd').innerHTML = "Infoteadus (BA)";
+    document.getElementById('info_science_md').innerHTML = "Infoteadus (MA)";
+    document.getElementById('mathematics').innerHTML = "Matemaatika, majandusmatemaatika ja andmeanalüüs";
+    document.getElementById('education_technology').innerHTML = "Haridustehnoloogia";
+    document.getElementById('computer_science_business').innerHTML = "Infotehnoloogia juhtimine";
+    document.getElementById('computer_science_teacher').innerHTML = "Informaatikaõpetaja";
+    document.getElementById('mathematics_teacher').innerHTML = "Matemaatikaõpetaja";
+    document.getElementById('open_society_technologies').innerHTML = "Avatud ühiskonna tehnoloogiad";
+    document.getElementById('digital_study_games').innerHTML = "Digitaalsed õpimängud";
+    document.getElementById('human_and_computer_interaction').innerHTML = "Inimese ja arvuti interaktsioon";
+    document.getElementById('interaction_design').innerHTML = "Interaktsioonidisain";
+    document.getElementById('free_label').innerHTML = "Tasuta";
+    document.getElementById('free_label').style.marginRight = "157px";
+    document.getElementById('paid_label').innerHTML = "Tasuline";
+    document.getElementById('continue_button').innerHTML = "Edasi";
+    document.getElementById('curriculum_attendance_label').innerHTML = "TLÜs viibitud semestrite arv";
+    document.getElementById('sabbatical_leave_label').innerHTML = "Akadeemilisel puhkusel viibitud semestrite arv";
+    document.getElementById('ects_count_label').innerHTML = "Õppekava täitmisel arvesse minevad EAP-d";
+    document.getElementById('studied_abroad_label').innerHTML = "Kas oled viibinud välisõppes või välispraktikal?";
+    document.getElementById('currently_studying_abroad_label').innerHTML = "Kas sa viibid hetkel välisõppel või välispraktikal?";
+    document.getElementById('abroad_semester_count_label').innerHTML = "Välisõppes viibitud semestrite arv";
+    document.getElementById('abroad_ects_count_label').innerHTML = "Välisõppes sooritatud ainepunktide arv";
+    document.getElementById('studied_estonian_label').innerHTML = "Kas sulle on määratud ja oled edukalt täitnud riigikeele süvaõppe kõrvaleriala?";
+    document.getElementById('current_sabbatical_leave_label').innerHTML = "Kas viibid hetkel akadeemilisel puhkusel?";
+    document.getElementById('back_button').innerHTML = "Tagasi";
+    document.getElementById('calculate_button').innerHTML = "Kalkuleeri";
+    document.getElementById('first_help_txt').innerHTML = "Sisaldab kõiki Tallinna Ülikoolis viibitud semestreid (k.a akadeemilisel puhkusel, välisõppes jne)";
+    document.getElementById('first_help_txt').style.width = "240px";
+    document.getElementById('second_help_txt').style.width = "190px";
+    document.getElementById('fourth_help_txt').style.top = "0.5px";
+    document.getElementById('second_help_txt').innerHTML = 'Õppeinfosüsteemi lahter "sh akadeemiliselt"';
+    document.getElementById('third_help_txt').innerHTML = 'Õppeinfosüsteemi lahter "Koormusarvutusel arvesse minevad EAP-d sügissemestri ja õppeaasta lõpu seisuga"';
+    document.getElementById('fourth_help_txt').innerHTML = "Süvaõppe mooduli täitmine on kohustuslik vaid eestikeelsete õppekavade üliõpilastele, kelle eesti keele tase ei vasta ülikoolis kehtestatud C1-nõudele ja kes on TLÜ poolt, paigutustesti alusel, määratud süvaõppe moodulit täitma.";
+    document.getElementById('result_heading').innerHTML = "Tulemus";
+    document.getElementById('new_calculation_button').innerHTML = "Alusta uuesti";
+    document.getElementById('result_calculate_button').innerHTML = "Kalkuleeri";
+    document.getElementById('pdf_save_button').innerHTML = "Salvesta PDFina";
+    document.getElementById('infosystem').innerHTML = "Õppeinfosüsteem: ";
+    
+    var x = document.getElementsByClassName("yes_label");
+    var i;
+    for (i = 0; i < x.length; i++) {
+        x[i].innerHTML = "Jah";
+    }
+    var y = document.getElementsByClassName("no_label");
+    var j;
+    for (j = 0; j < y.length; j++) {
+        y[j].innerHTML = "Ei";
+    }
+    ErrorToEst();
+    ResultToEst(); 
+}
+
+function ErrorToEst(){
+    var err1 = document.getElementById("error").innerHTML.replace("\nThe number of semesters spent at TU must not be 0!\n", "\nTLÜs viibitud semestrite arv ei tohi olla 0!\n");
+    document.getElementById("error").innerHTML = err1;
+    document.getElementById("result_error").innerHTML = err1;
+
+    var err2 = document.getElementById("error").innerHTML.replace("\nThe number of semesters spent on academic leave must not exceed the number of semesters spent at TU!\n", "\nAkadeemilisel puhkusel viibitud semestrite arv ei tohi olla üle TLÜs viibitud semestrite arvust!\n");
+    document.getElementById("error").innerHTML = err2;
+    document.getElementById("result_error").innerHTML = err2;
+
+    var err3 = document.getElementById("error").innerHTML.replace("\nThe number of credits to be taken into account for the completion of the curriculum must not be 0!\n", "\nÕppekava täitmisel arvesse minevate EAP-de arv ei tohi olla 0!\n");
+    document.getElementById("error").innerHTML = err3;
+    document.getElementById("result_error").innerHTML = err3;
+
+    var err4 = document.getElementById("error").innerHTML.replace("\nThe number of semesters spent studying abroad must not be 0!\n", "\nVälisõppes viibitud semestrite arv ei tohi olla 0!\n");
+    document.getElementById("error").innerHTML = err4;
+    document.getElementById("result_error").innerHTML = err4;
+
+    var err5 = document.getElementById("error").innerHTML.replace("\nThe number of credits spent abroad must not be 0!\n", "\nVälisõppes viibitud ainepunktide arv ei tohi olla 0!\n");
+    document.getElementById("error").innerHTML = err5;
+    document.getElementById("result_error").innerHTML = err5;
+
+    var err6 = document.getElementById("error").innerHTML.replace("\nAcademic leave and study abroad cannot be taken at the same time!\n", "\nAkadeemilisel puhkusel ning välisõppel ei saa korraga samal ajal viibida!\n");
+    document.getElementById("error").innerHTML = err6;
+    document.getElementById("result_error").innerHTML = err6;
+}
+
+function ResultToEst(){
+    $("#curriculum_result").html("Sinu õppekava: " + $("#curriculum_dropdown :selected").text());
+    $("#ects_result").html("Sinu ainepunktide arv: " + $("#ects_count").val() + " EAP");
+    if($("#ects_count").val() < ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
+        $("#study_load").html("Õppekoormus: Täiskoormus");
+    } else {
+        $("#study_load").html("Õppekoormus: Osakoormus");
+    }
+    $("#study_lower_limit_result").html("Õppes jätkamise alampiir: " + ((($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 30) * 0.5) + " ECTS");
+    $("#full_study_load_limit_result").html("Alampiir õpingute jätkamiseks täiskoormuses: " + (($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5) + " ECTS");
+    
+    if($("#ects_count").val() >= ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
+        $("#scenario").html("Jätkad täiskoormusel õppimist.");
+    }
+    if($("#ects_count").val() <= ($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5){
+        $("#scenario").html("Langed õpingutega osakoormusele.");
+    }
+    if(($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) % 2 == 0 && $("#ects_count").val() < ((($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 30) * 0.5)){
+        $("#scenario").html("<b>Oled eksmatrikuleerimisohus, kuna EAP-de arv on väiksem kui õppes jätkamise alampiir!</b>");
+    }
 }
