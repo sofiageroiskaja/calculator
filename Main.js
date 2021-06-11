@@ -5,6 +5,8 @@ class CurriculumCalculator{
         this.curriculumChoice = $("#curriculum_dropdown :selected").text();
         this.bachelorsCurriculums = ["Informaatika", "Infoteadus (BA)", "Matemaatika, majandusmatemaatika ja andmeanalüüs"];
         this.mastersCurriculums = ["Haridustehnoloogia", "Infotehnoloogia juhtimine", "Infoteadus (MA)", "Informaatikaõpetaja", "Avatud ühiskonna tehnoloogiad", "Digitaalsed õpimängud", "Inimese ja arvuti interaktsioon", "Interaktsioonidisain"];
+        this.bachelorsCurriculumsEng = ["Informatics", "Information science (BA)", "Mathematics, economic mathematics and data analysis"];
+        this.mastersCurriculumsEng = ["Educational technology", "Information technology management", "Information science (MA)", "Informatics teacher", "Open society technologies", "Digital learning games", "Human and computer interaction", "Interaction design"];
         this.fullStudyLoadLowerLimit = 0;
         this.payLoad = $('input[name="pay_load"]:checked').val();
         this.studyLowerLimit = 0;
@@ -46,6 +48,7 @@ class CurriculumCalculator{
         //}
         
     }
+
     
     pageReload(){
         location.reload();
@@ -193,6 +196,7 @@ $("#result_calculate_button").click(function(){
     }
 })
 
+
 function CalculatorToEng() {
     if(lang == 0){
         lang = 1;
@@ -250,9 +254,9 @@ function CalculatorToEng() {
     $(".no_label").each(function(){
         $(this).html('No');
     });
-
     ResultToEng();
 }
+
 
 function ResultToEng(){
     $("#curriculum_result").html("Your curriculum: " + $("#curriculum_dropdown :selected").text());
@@ -338,3 +342,4 @@ function ResultToEst(){
     $("#study_lower_limit_result").html("Õppes jätkamise alampiir: " + ((($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 30) * 0.5) + " ECTS");
     $("#full_study_load_limit_result").html("Alampiir õpingute jätkamiseks täiskoormuses: " + (($("#curriculum_attendance").val() - $("#sabbatical_leave").val()) * 22.5) + " ECTS");
 }
+

@@ -29,10 +29,10 @@ class Validation extends CurriculumCalculator {
 
     checkCurriculumDegree(){
         for(let i=0; i<this.mastersCurriculums.length; i++){
-            if(this.mastersCurriculums[i] == this.curriculumChoice){
+            if(this.mastersCurriculums[i] == this.curriculumChoice || (this.mastersCurriculumsEng[i] == this.curriculumChoice && lang == 1)){
                 this.degree = "masters";
                 break;
-            } else if (this.bachelorsCurriculums[i] == this.curriculumChoice){
+            } else if (this.bachelorsCurriculums[i] == this.curriculumChoice || (this.bachelorsCurriculumsEng[i] == this.curriculumChoice && lang == 1)){
                 this.degree = "bachelors";
             }
         }
@@ -52,7 +52,7 @@ class Validation extends CurriculumCalculator {
                 this.k1 = 1;
             }
         }
-        if($("#sabbatical_leave").val() >= 0 || $("#sabbatical_leave").val() <= $("#curriculum_attendance").val()){
+        if($("#sabbatical_leave").val() >= 0 && $("#sabbatical_leave").val() <= $("#curriculum_attendance").val()){
             this.k2 = 1;
         }
         if($("#ects_count").val() > 0){
@@ -88,8 +88,11 @@ class Validation extends CurriculumCalculator {
     }
 
     errorMessages(){
+        //Validation.prototype.checkCurriculumDegree.call(this);
         if(this.k1 == 0 && lang == 1){
+            console.log(this.degree);
             if(this.degree == "masters" && this.universityAttendance > 8){
+                console.log("k1 eng masters toimib");
                 swal({
                     title: "Error!",
                     text: "Masters curriculum semester count must not be higher than 8!",
@@ -97,7 +100,9 @@ class Validation extends CurriculumCalculator {
                     button: "OK",
                     className: "errorMsg",
                 });
-            } else if (this.degree == "bachelors" && this.universityAttendance > 12){
+            }
+            if (this.degree == "bachelors" && this.universityAttendance > 12){
+                console.log("k1 eng bachelors toimib");
                 swal({
                     title: "Error!",
                     text: "Bachelors curriculum semester count must not be higher than 12!",
@@ -105,15 +110,8 @@ class Validation extends CurriculumCalculator {
                     button: "OK",
                     className: "errorMsg",
                 });
-            } else if (this.universityAttendance == 0){
-                swal({
-                    title: "Error!",
-                    text: "The number of semesters spent at TU must not be 0!",
-                    icon: "error",
-                    button: "OK",
-                    className: "errorMsg",
-                });
-            } else if (this.universityAttendance < 0){
+            }
+            if (this.universityAttendance == 0){
                 swal({
                     title: "Error!",
                     text: "The number of semesters spent at TU must not be 0!",
@@ -122,12 +120,24 @@ class Validation extends CurriculumCalculator {
                     className: "errorMsg",
                 });
             }
+            if (this.universityAttendance < 0){
+                swal({
+                    title: "Error!",
+                    text: "The number of semesters spent at TU must not be below 0!",
+                    icon: "error",
+                    button: "OK",
+                    className: "errorMsg",
+                });
+            }
+
             /*$("#error").append("\nThe number of semesters spent at TU must not be 0!\n");
             $("#result_error").append("\nThe number of semesters spent at TU must not be 0!\n");*/
             this.k1 = 1;
         }
         if(this.k1 == 0){
+            console.log(this.degree);
             if(this.degree == "masters" && this.universityAttendance > 8){
+                console.log(this.degree);
                 swal({
                     title: "Viga!",
                     text: "Magistri õppekava semestrite arv ei tohi olla suurem kui 8!",
@@ -135,7 +145,8 @@ class Validation extends CurriculumCalculator {
                     button: "OK",
                     className: "errorMsg",
                 });
-            } else if (this.degree == "bachelors" && this.universityAttendance > 12){
+            }
+            if (this.degree == "bachelors" && this.universityAttendance > 12){
                 swal({
                     title: "Viga!",
                     text: "Bakalaureuse õppekava semestrite arv ei tohi olla suurem kui 12!",
@@ -143,7 +154,8 @@ class Validation extends CurriculumCalculator {
                     button: "OK",
                     className: "errorMsg",
                 });
-            } else if (this.universityAttendance == 0) {
+            }
+            if (this.universityAttendance == 0) {
                 swal({
                     title: "Viga!",
                     text: "TLÜs viibitud semestrite arv ei tohi olla 0!",
@@ -151,10 +163,11 @@ class Validation extends CurriculumCalculator {
                     button: "OK",
                     className: "errorMsg",
                 });
-            } else if (this.universityAttendance < 0){
+            }
+            if (this.universityAttendance < 0){
                 swal({
                     title: "Viga!",
-                    text: "TLÜs viibitud semestrite arv ei tohi olla 0!",
+                    text: "TLÜs viibitud semestrite arv ei tohi olla väiksem kui 0!",
                     icon: "error",
                     button: "OK",
                     className: "errorMsg",
@@ -166,7 +179,7 @@ class Validation extends CurriculumCalculator {
             this.k1 = 1;
         }
         if(this.k2 == 0 && lang == 1){
-            if($("#sabbatical_leave").val() > $("#curriculum_attendance").val()){
+            if(this.sabbaticalCount > this.attendanceCount){
                 swal({
                     title: "Error!",
                     text: "The number of semesters spent on academic leave must not exceed the number of semesters spent at TU!",
@@ -180,7 +193,10 @@ class Validation extends CurriculumCalculator {
             this.k2 = 1;
         }
         if(this.k2 == 0){
-            if($("#sabbatical_leave").val() > $("#curriculum_attendance").val()){
+            if(this.sabbaticalCount > this.attendanceCount){
+                console.log("Akad puhkus: " + this.sabbaticalCount);
+                console.log("TLÜs viibitud semestrid: " + this.attendanceCount);
+                // nt TLÜ semestrite inputi panna 11 ja akad. puhkuse inputi panna 2, siis viskab errori. Aga nt 20 ja 2 toimib.
                 swal({
                     title: "Viga!",
                     text: "Akadeemilisel puhkusel viibitud semestrite arv ei tohi olla üle TLÜs viibitud semestrite arvust!",
@@ -189,6 +205,7 @@ class Validation extends CurriculumCalculator {
                     className: "errorMsg",
                 });
             }
+
             /*$("#error").append("\nAkadeemilisel puhkusel viibitud semestrite arv ei tohi olla üle TLÜs viibitud semestrite arvust!\n");
             $("#result_error").append("\nAkadeemilisel puhkusel viibitud semestrite arv ei tohi olla üle TLÜs viibitud semestrite arvust!\n");*/
             this.k2 = 1;

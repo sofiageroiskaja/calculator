@@ -16,7 +16,7 @@ canvas {
 
 #canvas_graph{
     outline: white 1px solid;
-    box-sizing: padding-box;
+    box-sizing: border-box;
 }
 
 button{
@@ -42,7 +42,7 @@ button:active {
 a, p, #infosystem{font-size: 14px;}
 
 #help_link, #mainpage{
-    color: rgba(76,134,123,255);
+    color: rgb(76,134,123);
     text-decoration: underline;
     cursor: pointer;
 }
@@ -55,12 +55,11 @@ a, p, #infosystem{font-size: 14px;}
 #ee{
     color: rgb(16, 16, 16);
     text-decoration: none;
-    font-weight: none;
     cursor: pointer;
 }
 
 #en{
-    color: rgba(76,134,123,255);
+    color: rgb(76,134,123);
     text-decoration: none;
     cursor: pointer;
 }
@@ -72,7 +71,7 @@ a, p, #infosystem{font-size: 14px;}
 #free_label, .yes_label{margin-right: 20px;}
 
 #info_text {
-    background-color: rgba(107,203,186,255);
+    background-color: rgb(107,203,186);
     padding: 5px;
     width: 589px;
     color: white;
@@ -91,7 +90,7 @@ a, p, #infosystem{font-size: 14px;}
     margin-bottom: 10px;
     padding: 10px;
     border-style: solid;
-    border-color: rgba(107,203,186,255);
+    border-color: rgb(107,203,186);
     width: 573px;
 }
 
@@ -104,7 +103,7 @@ a, p, #infosystem{font-size: 14px;}
     width: 573px;
     display: none;
     border-style: solid;
-    border-color: rgba(107,203,186,255);
+    border-color: rgb(107,203,186);
     font-size: 14px;
 }
 
@@ -170,7 +169,7 @@ input[type=number] {
     margin-top: 10px;
     padding: 10px;
     border-style: solid;
-    border-color: rgba(107,203,186,255);
+    border-color: rgb(107,203,186);
     width: 546px;
 }
 
